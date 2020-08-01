@@ -18,12 +18,13 @@
                         @if (Auth::id() == $micropost->user_id)
                             {{-- 投稿削除ボタンのフォーム --}}
                             <form method="POST" action="{{route('microposts.destroy',[$micropost->id])}}">
-                                @csrf
+                            @csrf
                                 <input type="submit" class="btn btn-danger btn-sm" value="delete">
                                 <input type="hidden" name="_method" value="DELETE">
                             </form>
                         @endif
                     </div>
+                    @include('favorite.favorite')
                 </div>
             </li>
         @endforeach
