@@ -1,4 +1,4 @@
-@if ($favorite->is_favorite($micropost->id))
+@if (Auth::user()->is_favorite($micropost->id))
     {{-- いいね解除のフォーム --}}
     <form method="POST" action="{{route('favorities.unfavorite',[$micropost->id])}}" >
     @csrf

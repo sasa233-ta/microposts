@@ -118,8 +118,6 @@ class User extends Authenticatable
      */
     public function is_following($userId)
     {
-        $articles = $this->followings()->where('follow_id', $userId)->tosql();
-        var_dump($articles);
         // フォロー中ユーザの中に $userIdのものが存在するか
         return $this->followings()->where('follow_id', $userId)->exists();
     }
@@ -147,7 +145,66 @@ class User extends Authenticatable
      */
     public function favorities()
     {
-        return $this->belongsToMany(User::class, 'favorities', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'favorities', 'user_id', 'micropost_id')->withTimestamps();
     }
     
+            /**
+     * $micropostIdで指定された投稿をいいねする。
+     *
+     * @param  int  $micropostId
+     * @return bool
+     */
+    public function favorite($micropostId)
+    {
+        // すでにいいねしているかの確認
+        $exist = $this->is_favorite($micropostId);
+        if ($exist) {
+            // すでにいいねしていれば何もしない
+            return false;
+        } else {
+            // 未いいねであればいいねする
+
+            $this->favorities()->attach($micropostId);
+            return true;
+        }
+    }
+
+    /**
+     * $micropostIdで指定された投稿のいいねを解除する。
+     *
+     * @param  int  $micropostId
+     * @return bool
+     */
+    public function unfavorite($micropostId)
+    {
+        // すでにフォローしているかの確認
+        $exist = $this->is_favorite($micropostId);
+
+        if ($exist) {
+            // すでにフォローしていればフォローを外す
+            $this->favorities()->detach($micropostId);
+            return true;
+        } else {
+            // 未フォローであれば何もしない
+            return false;
+        }
+    }
+
+    /**
+     * 指定された $micropostIdの投稿をこのユーザがいいね中であるか調べる。フォロー中ならtrueを返す。
+     *
+     * @param  int  $micropostId
+     * @return bool
+     */
+    public function is_favorite($micropostId)
+    {
+        // DB::enableQueryLog();
+        // 確認したいSQL
+        $articles = $this->favorities()->where('micropost_id', $micropostId)->toSql();
+        // dumpする
+        var_dump($articles);
+        // いいね中投稿の中に $micropostIdのものが存在するか
+        $flag = $this->favorities()->where('micropost_id', $micropostId)->exists();
+        return $flag;
+    }
 }

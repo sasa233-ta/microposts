@@ -17,9 +17,8 @@ class FavoritiesController extends Controller
      */
     public function store($id)
     {
-        $micropost = new Micropost();
         // 認証済みユーザ（閲覧者）が、 idの投稿をいいねする
-        $micropost->favorite($id);
+        \Auth::user()->favorite($id);
         // 前のURLへリダイレクトさせる
         return back();
     }
