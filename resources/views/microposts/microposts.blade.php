@@ -24,7 +24,9 @@
                             </form>
                         @endif
                     </div>
+                    <div>
                     @include('favorite.favorite')
+                    </div>
                 </div>
             </li>
         @endforeach

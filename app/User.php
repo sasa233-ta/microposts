@@ -137,7 +137,7 @@ class User extends Authenticatable
      */
     public function loadRelationshipCounts()
     {
-        $this->loadCount(['microposts', 'followings', 'followers']);
+        $this->loadCount(['microposts', 'followings', 'followers', 'favorities']);
     }
 
     /**
@@ -145,7 +145,7 @@ class User extends Authenticatable
      */
     public function favorities()
     {
-        return $this->belongsToMany(User::class, 'favorities', 'user_id', 'micropost_id')->withTimestamps();
+        return $this->belongsToMany(Micropost::class, 'favorities', 'user_id', 'micropost_id')->withTimestamps();
     }
     
             /**
