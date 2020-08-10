@@ -14,8 +14,8 @@
                         {{-- 投稿内容 --}}
                         <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
                     </div>
-                    <div class="row">
-                    <div class="col-sm-2">
+                    <div style="display:flex;">
+                    <div class="mr-2">
                         @if (Auth::id() == $micropost->user_id)
                             {{-- 投稿削除ボタンのフォーム --}}
                             <form method="POST" action="{{route('microposts.destroy',[$micropost->id])}}">
@@ -25,7 +25,7 @@
                             </form>
                         @endif
                     </div>
-                    <div class="col-sm-4 offset-sm-1">
+                    <div>
                     @include('favorite.favorite')
                     </div>
                     </div>
