@@ -18,6 +18,7 @@
                     <ul class="dropdown-menu dropdown-menu-right">
                         {{-- ユーザ詳細ページへのリンク --}}
                         <li class="dropdown-item"><a href="{{route('users.show',['user' => Auth::id()])}}">My profile</a></li>
+                        <li class="dropdown-item"><a href="{{ route('users.favorities', ['id' => $user->id]) }}">favorities</a></li>
                         <li class="dropdown-divider"></li>
                         {{-- ログアウトへのリンク --}}
                         <li class="dropdown-item"><a href="{{route('logout.get')}}">Logout</a></li>

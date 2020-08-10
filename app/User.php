@@ -198,11 +198,6 @@ class User extends Authenticatable
      */
     public function is_favorite($micropostId)
     {
-        // DB::enableQueryLog();
-        // 確認したいSQL
-        $articles = $this->favorities()->where('micropost_id', $micropostId)->toSql();
-        // dumpする
-        var_dump($articles);
         // いいね中投稿の中に $micropostIdのものが存在するか
         $flag = $this->favorities()->where('micropost_id', $micropostId)->exists();
         return $flag;
